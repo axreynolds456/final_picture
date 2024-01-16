@@ -5,17 +5,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class AppHandler extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
+	TextureRegion subImg;
 	int x, y;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		img = new Texture("primaryColorSheet.png");
+		subImg = new TextureRegion(img, 64, 0, 128, 128);
 
 		x = 0;
 		y = 0;
@@ -26,7 +29,7 @@ public class AppHandler extends ApplicationAdapter {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
 
-		batch.draw(img, x, y);
+		batch.draw(subImg, x, y);
 
 		batch.end();
 
@@ -55,16 +58,16 @@ public class AppHandler extends ApplicationAdapter {
 		y = Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight()/2;
 		 */
 		if(x < (Gdx.input.getX() - img.getWidth()/2)) {
-			x += 10;
+			x += 20;
 		}
 		else if(x > (Gdx.input.getX() - img.getWidth()/2)) {
-			x -= 10;
+			x -= 20;
 		}
 		else if(y < (Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight()/2)) {
-			y += 10;
+			y += 20;
 		}
 		else if(y > (Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight()/2)) {
-			y -= 10;
+			y -= 20;
 		}
 
 
