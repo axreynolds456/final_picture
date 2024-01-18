@@ -6,19 +6,40 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.bmhs.gdxintro.gfx.assets.Tile;
+import com.bmhs.gdxintro.gfx.utils.TileHandler;
 
 public class AppHandler extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture img;
-	TextureRegion subImg;
 	int x, y;
+
+	int[][] worldIntArray = {{4,4,4,4,4,4,4,0,0,0,1,1,0,4,4,4,4,4,4,4},
+							{4,4,4,4,4,4,0,1,1,1,0,1,1,0,4,4,4,4,4,4},
+							{4,4,4,4,4,0,1,1,1,1,1,0,0,0,0,4,4,4,4,4},
+							{4,4,4,4,4,0,1,1,1,1,1,0,1,1,1,0,4,4,4,4},
+							{4,4,4,4,0,1,1,1,1,1,1,1,0,0,1,0,4,4,4,4},
+							{4,4,4,4,0,1,1,1,2,2,2,2,1,1,2,0,4,4,4,4},
+							{4,4,4,4,0,1,1,1,1,2,3,3,2,3,2,0,4,4,4,4},
+							{4,4,4,4,4,0,1,1,1,2,3,3,2,3,2,0,4,4,4,4},
+							{4,4,4,4,0,0,1,1,2,2,2,2,2,2,2,0,4,4,4,4},
+							{4,4,0,0,1,1,0,1,2,0,0,0,0,2,0,4,4,4,4,4},
+							{4,0,1,2,2,2,1,0,2,2,2,2,2,0,0,0,0,0,4,4},
+							{4,0,1,1,2,2,1,1,0,0,0,0,0,0,1,1,2,1,0,4},
+							{0,1,1,1,2,0,1,1,1,1,1,1,1,1,1,2,1,1,0,4},
+							{0,1,1,0,0,0,1,1,3,3,3,1,1,0,2,1,1,1,0,4},
+							{0,1,1,1,0,0,0,1,1,3,1,1,0,0,0,0,1,1,0,4},
+							{0,1,1,1,0,0,1,0,0,0,0,0,1,0,0,1,1,1,0,4},
+							{4,0,0,0,4,0,1,1,1,1,1,1,1,0,0,1,1,1,0,4},
+							{4,4,4,4,0,2,0,0,0,1,0,0,0,0,4,0,0,0,4,4},
+							{4,4,4,0,1,1,2,2,2,0,2,2,2,1,0,4,4,4,4,4},
+							{4,4,0,0,1,1,1,2,0,4,0,2,1,1,0,0,4,4,4,4}};
+
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("primaryColorSheet.png");
-		subImg = new TextureRegion(img, 64, 0, 128, 128);
 
 		x = 0;
 		y = 0;
@@ -29,7 +50,13 @@ public class AppHandler extends ApplicationAdapter {
 		ScreenUtils.clear(1, 0, 0, 1);
 		batch.begin();
 
-		batch.draw(subImg, x, y);
+		for(int r = 0; r < worldIntArray.length; r++) {
+			for(int c = 0; c < worldIntArray[r].length; c++) {
+				batch.draw(TileHandler.getTileHandler().getWorldTileArray().get(worldIntArray[r][c]).getTexture(), c* Tile.ON_SCREEN_DEFAULT_WIDTH, Gdx.graphics.getHeight() -Tile.ON_SCREEN_DEFAULT_HEIGHT - (r*Tile.ON_SCREEN_DEFAULT_HEIGHT));
+				}
+			}
+
+
 
 		batch.end();
 
@@ -37,6 +64,7 @@ public class AppHandler extends ApplicationAdapter {
 	}
 
 	public void checkInput() {
+
 		/*
 		if(Gdx.input.isKeyJustPressed(Input.Keys.W)) {
 			y += 10;
@@ -56,26 +84,25 @@ public class AppHandler extends ApplicationAdapter {
 
 		x = Gdx.input.getX() - img.getWidth()/2;
 		y = Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight()/2;
-		 */
+
+
 		if(x < (Gdx.input.getX() - img.getWidth()/2)) {
-			x += 20;
+			x += 5;
 		}
-		else if(x > (Gdx.input.getX() - img.getWidth()/2)) {
-			x -= 20;
+		if(x > (Gdx.input.getX() - img.getWidth()/2)) {
+			x -= 5;
 		}
-		else if(y < (Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight()/2)) {
-			y += 20;
+		if(y < (Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight()/2)) {
+			y += 5;
 		}
-		else if(y > (Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight()/2)) {
-			y -= 20;
+		if(y > (Gdx.graphics.getHeight() - Gdx.input.getY() - img.getHeight()/2)) {
+			y -= 5;
 		}
-
-
+*/
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 	}
 }
